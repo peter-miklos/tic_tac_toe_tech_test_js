@@ -17,6 +17,7 @@ Game.prototype = {
   play: function(player, x, y) {
     this._validateGameAndPlayer(player, x, y)
     this._currentGrid.play(player, x, y)
+    this._playersInTurns.push(player)
   },
   getGrid: function() {
     return this._currentGrid.getGrid();
@@ -26,8 +27,12 @@ Game.prototype = {
   },
   _validateGameAndPlayer: function(player, x, y) {
     if(this._isGameOver()) { throw new Error("Game Over") }
+    if(!this._isValidPlayer(player)) { throw new Error("Invalid player")}
   },
   _isGameOver: function() {
-    return typeof this._winner !== 'undefined'
+    return typeof this._winner !== 'undefined' || this._currentGrid.isGridFull()
+  },
+  _isValidPlayer: function(player) {
+    return this._playersInTurns.length === 0 || this._playersInTurns[this._playersInTurns.length - 1] !== player
   }
 }

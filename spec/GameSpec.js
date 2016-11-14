@@ -9,7 +9,7 @@ describe("Game", function() {
   beforeEach(function() {
     player1 = jasmine.createSpyObj("player1", ['getName']);
     player2 = jasmine.createSpyObj("player2", ['getName']);
-    grid = jasmine.createSpyObj("grid", ['play', 'getGrid']);
+    grid = jasmine.createSpyObj("grid", ['play', 'getGrid', 'isGridFull']);
     game = new Game(player1, player2, grid);
   })
 
@@ -51,11 +51,24 @@ describe("Game", function() {
       expect(grid.play).toHaveBeenCalled();
     })
 
-    it("raises error if game is over", function() {
+    it("raises error if there is a winner, and game is over", function() {
       game._winner = player1
-      expect(function() {
-        game.play(player2, 0, 2)
-      }).toThrowError("Game Over")
+      expect(function() { game.play(player2, 0, 2) }).toThrowError("Game Over")
+    })
+
+    it("raises error if grid is full and game is over", function() {
+      grid.isGridFull.and.returnValue(true);
+      expect(function() { game.play(player1, 1, 1) }).toThrowError("Game Over")
+    })
+
+    it("calls the isGridFull method on the grid", function() {
+      game.play(player1, 2, 1)
+      expect(grid.isGridFull).toHaveBeenCalled();
+    })
+
+    it("raises error if the same player wants to play again", function() {
+      game.play(player1, 0, 0)
+      expect( function() { game.play(player1, 1, 1)}).toThrowError("Invalid player")
     })
   })
 
