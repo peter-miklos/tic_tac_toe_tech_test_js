@@ -3,6 +3,8 @@
 function Game(player1, player2, grid) {
   this._players = [player1, player2];
   this._currentGrid = grid ? grid : new Grid();
+  this._winner;
+  this._playersInTurns = []
 }
 
 Game.prototype = {
