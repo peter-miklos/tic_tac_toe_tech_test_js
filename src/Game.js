@@ -15,6 +15,7 @@ Game.prototype = {
     return this._players[this._players.length - 1]
   },
   play: function(player, x, y) {
+    this._validateGameAndPlayer(player, x, y)
     this._currentGrid.play(player, x, y)
   },
   getGrid: function() {
@@ -22,5 +23,11 @@ Game.prototype = {
   },
   getWinner: function() {
     return this._winner;
+  },
+  _validateGameAndPlayer: function(player, x, y) {
+    if(this._isGameOver()) { throw new Error("Game Over") }
+  },
+  _isGameOver: function() {
+    return typeof this._winner !== 'undefined'
   }
 }

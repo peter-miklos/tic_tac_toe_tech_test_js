@@ -50,6 +50,13 @@ describe("Game", function() {
       game.play(player1, 2, 1)
       expect(grid.play).toHaveBeenCalled();
     })
+
+    it("raises error if game is over", function() {
+      game._winner = player1
+      expect(function() {
+        game.play(player2, 0, 2)
+      }).toThrowError("Game Over")
+    })
   })
 
 
