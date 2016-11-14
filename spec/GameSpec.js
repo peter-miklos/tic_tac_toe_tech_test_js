@@ -7,13 +7,15 @@ describe("Game", function() {
   var grid
 
   beforeEach(function() {
-    player1 = jasmine.createSpyObj("player1", ["name"])
-    player2 = jasmine.createSpyObj("player2", ["name"])
-    grid = jasmine.createSpyObj("grid")
-    game = new Game(player1, player2, grid)
+    player1 = jasmine.createSpyObj("player1", ['getName']);
+    player2 = jasmine.createSpyObj("player2", ['getName']);
+    grid = jasmine.createSpy("grid");
+    game = new Game(player1, player2, grid);
+    console.log(game)
   })
 
   describe("#getPlayer1", function() {
+    console.log(player1)
     it("returns player1", function() {
       expect(game.getPlayer1()).toEqual(player1);
     })
@@ -38,7 +40,7 @@ describe("Game", function() {
   })
 
   describe("#play", function() {
-    
+
   })
 
 
