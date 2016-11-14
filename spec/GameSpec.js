@@ -26,8 +26,9 @@ describe("Game", function() {
   })
 
   describe("#getWinner", function() {
-    xit("returns the winner of the game", function() {
-
+    it("returns the winner of the game", function() {
+      game._winner = player2;
+      expect(game.getWinner()).toEqual(player2)
     })
   })
 

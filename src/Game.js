@@ -19,5 +19,8 @@ Game.prototype = {
   },
   getGrid: function() {
     return this._currentGrid.getGrid();
+  },
+  getWinner: function() {
+    return this._winner;
   }
 }
