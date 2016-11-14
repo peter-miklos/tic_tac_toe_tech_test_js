@@ -40,5 +40,17 @@ describe("Grid", function() {
     })
   })
 
+  describe("#isGridFull", function() {
+    it("returns true if there is no more empty field in the grid", function() {
+      var smallGrid = new Grid(1)
+      smallGrid.claimField(player1, 0, 0)
+      expect(smallGrid.isGridFull()).toBe(true);
+    })
+
+    it("returns false if there is still empty field in the grid", function() {
+      expect(grid.isGridFull()).toBe(false);
+    })
+  })
+
 
 })
