@@ -57,16 +57,21 @@ describe("Grid", function() {
 
   describe("#playerWins", function() {
     it("returns true for player1 if all fields are claimed in a row", function() {
-      grid.claimField("player1", 0, 0)
-      grid.claimField("player2", 1, 1)
-      grid.claimField("player1", 1, 0)
-      grid.claimField("player2", 2, 1)
-      grid.claimField("player1", 2, 0)
-      expect(grid.playerWins("player1")).toBe(true)
+      grid.claimField(player1, 0, 0)
+      grid.claimField(player2, 1, 1)
+      grid.claimField(player1, 1, 0)
+      grid.claimField(player2, 2, 1)
+      grid.claimField(player1, 2, 0)
+      expect(grid.playerWins(player1)).toBe(true)
     })
 
-    xit("returns true for player1 if all fields are claimed in a column", function() {
-
+    it("returns true for player1 if all fields are claimed in a column", function() {
+      grid.claimField(player1, 0, 0)
+      grid.claimField(player2, 1, 1)
+      grid.claimField(player1, 0, 1)
+      grid.claimField(player2, 2, 1)
+      grid.claimField(player1, 0, 2)
+      expect(grid.playerWins(player1)).toBe(true)
     })
 
     xit("returns true for player1 if all fields are claimed in diagonal", function() {

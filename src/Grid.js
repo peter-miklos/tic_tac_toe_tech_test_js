@@ -49,7 +49,20 @@ Grid.prototype = {
     return result.includes(3);
   },
   _winsWithAColumn: function(player) {
-    return false
+    var result = []
+    var count = 0;
+    var self = this
+    var transposedArray = self._gridContent[0].map(function(col, i) {
+      return self._gridContent.map(function(row) { return row[i] })
+    });
+    for (var i = 0; i < transposedArray.length; i++) {
+      for (var j = 0; j < transposedArray[i].length; j++) {
+        if (transposedArray[i][j] === player) { count++ }
+      }
+      result.push(count);
+      count = 0;
+    }
+    return result.includes(3);
   },
   _winsWithADiagonal: function(player) {
     return false
