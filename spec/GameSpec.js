@@ -9,7 +9,7 @@ describe("Game", function() {
   beforeEach(function() {
     player1 = jasmine.createSpyObj("player1", ['getName']);
     player2 = jasmine.createSpyObj("player2", ['getName']);
-    grid = jasmine.createSpy("grid");
+    grid = jasmine.createSpyObj("grid", ['play', 'getGrid']);
     game = new Game(player1, player2, grid);
   })
 
@@ -38,7 +38,10 @@ describe("Game", function() {
   })
 
   describe("#play", function() {
-
+    it("calls the play method on the grid", function() {
+      game.play(player1, 2, 1)
+      expect(grid.play).toHaveBeenCalled();
+    })
   })
 
 

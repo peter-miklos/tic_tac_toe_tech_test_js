@@ -13,5 +13,8 @@ Game.prototype = {
   },
   getPlayer2: function() {
     return this._players[this._players.length - 1]
+  },
+  play: function(player, x, y) {
+    this._currentGrid.play(player, x, y)
   }
 }
