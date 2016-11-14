@@ -16,5 +16,8 @@ Game.prototype = {
   },
   play: function(player, x, y) {
     this._currentGrid.play(player, x, y)
+  },
+  getGrid: function() {
+    return this._currentGrid.getGrid();
   }
 }

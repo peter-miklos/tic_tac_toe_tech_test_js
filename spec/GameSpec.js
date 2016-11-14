@@ -32,8 +32,15 @@ describe("Game", function() {
   })
 
   describe("#getGrid", function() {
-    xit("returns the current grid", function() {
+    it("calls the getGrid method on the grid", function() {
+      game.getGrid();
+      expect(grid.getGrid).toHaveBeenCalled();
+    })
 
+    it("returns the value returned by the grid", function() {
+      var emptyGrid = new Array(3).fill(new Array(3))
+      grid.getGrid.and.returnValue(emptyGrid)
+      expect(game.getGrid()).toEqual(emptyGrid)
     })
   })
 
