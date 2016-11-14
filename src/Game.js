@@ -16,8 +16,7 @@ Game.prototype = {
   },
   play: function(player, x, y) {
     this._validateGameAndPlayer(player, x, y)
-    this._currentGrid.play(player, x, y)
-    this._playersInTurns.push(player)
+    return this._completeTurn(player, x, y)
   },
   getGrid: function() {
     return this._currentGrid.getGrid();
@@ -35,5 +34,11 @@ Game.prototype = {
   },
   _isValidPlayer: function(player) {
     return this._playersInTurns.length === 0 || this._playersInTurns[this._playersInTurns.length - 1] !== player
+  },
+  _completeTurn: function(player, x, y) {
+    this._currentGrid.claimField(player, x, y)
+    this._playersInTurns.push(player)
+    if (this._currentGrid.playerWins(player)) { this._winner = player }
+    return this._winner === player ? (player.getName() + " won!") : ("Field (x: " + x + ", y: " + y + ") claimed. Next turn.")
   }
 }

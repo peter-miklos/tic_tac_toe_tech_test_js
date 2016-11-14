@@ -9,9 +9,10 @@ describe("Game", function() {
   beforeEach(function() {
     player1 = jasmine.createSpyObj("player1", ['getName']);
     player2 = jasmine.createSpyObj("player2", ['getName']);
-    grid = jasmine.createSpyObj("grid", ['play', 'getGrid', 'isGridFull', 'isValidChoice']);
+    grid = jasmine.createSpyObj("grid", ['claimField', 'getGrid', 'isGridFull', 'isValidChoice', 'playerWins']);
     game = new Game(player1, player2, grid);
     grid.isValidChoice.and.returnValue(true)
+    grid.playerWins.and.returnValue(false)
   })
 
   describe("#getPlayer1", function() {
@@ -28,7 +29,8 @@ describe("Game", function() {
 
   describe("#getWinner", function() {
     it("returns the winner of the game", function() {
-      game._winner = player2;
+      grid.playerWins.and.returnValue(true)
+      game.play(player2, 0, 1)
       expect(game.getWinner()).toEqual(player2)
     })
   })
@@ -47,13 +49,18 @@ describe("Game", function() {
   })
 
   describe("#play", function() {
-    it("calls the play method on the grid", function() {
+    it("calls the claimField method on the grid", function() {
       game.play(player1, 2, 1)
-      expect(grid.play).toHaveBeenCalled();
+      expect(grid.claimField).toHaveBeenCalled();
+    })
+
+    it("confirms that the field is claimed", function() {
+      expect(game.play(player1, 0, 2)).toEqual("Field (x: 0, y: 2) claimed. Next turn.")
     })
 
     it("raises error if there is a winner, and game is over", function() {
-      game._winner = player1
+      grid.playerWins.and.returnValue(true)
+      game.play(player1, 1, 1)
       expect(function() { game.play(player2, 0, 2) }).toThrowError("Game Over")
     })
 
@@ -81,7 +88,22 @@ describe("Game", function() {
       grid.isValidChoice.and.returnValue(false)
       expect(function() { game.play(player2, 4, 1)}).toThrowError("Invalid choice")
     })
+
+    it("calls playerWins method on the grid", function() {
+      game.play(player1, 2, 2)
+      expect(grid.playerWins).toHaveBeenCalled();
+    })
+
+    it("player is added to winner variable if player wins the game", function() {
+      grid.playerWins.and.returnValue(true)
+      game.play(player2, 1, 1)
+      expect(game._winner).toEqual(player2)
+    })
+
+    it("confirms that the player won the game", function() {
+      grid.playerWins.and.returnValue(true)
+      player2.getName.and.returnValue("Bob")
+      expect(game.play(player2, 1, 1)).toEqual("Bob won!")
+    })
   })
-
-
 })
