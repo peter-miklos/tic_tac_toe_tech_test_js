@@ -9,13 +9,11 @@ describe("Game", function() {
   beforeEach(function() {
     player1 = jasmine.createSpyObj("player1", ['getName']);
     player2 = jasmine.createSpyObj("player2", ['getName']);
-    grid = jasmine.createSpy("grid");
+    grid = jasmine.createSpyObj("grid", ['play', 'getGrid']);
     game = new Game(player1, player2, grid);
-    console.log(game)
   })
 
   describe("#getPlayer1", function() {
-    console.log(player1)
     it("returns player1", function() {
       expect(game.getPlayer1()).toEqual(player1);
     })
@@ -28,19 +26,30 @@ describe("Game", function() {
   })
 
   describe("#getWinner", function() {
-    xit("returns the winner of the game", function() {
-
+    it("returns the winner of the game", function() {
+      game._winner = player2;
+      expect(game.getWinner()).toEqual(player2)
     })
   })
 
   describe("#getGrid", function() {
-    xit("returns the current grid", function() {
+    it("calls the getGrid method on the grid", function() {
+      game.getGrid();
+      expect(grid.getGrid).toHaveBeenCalled();
+    })
 
+    it("returns the value returned by the grid", function() {
+      var emptyGrid = new Array(3).fill(new Array(3))
+      grid.getGrid.and.returnValue(emptyGrid)
+      expect(game.getGrid()).toEqual(emptyGrid)
     })
   })
 
   describe("#play", function() {
-
+    it("calls the play method on the grid", function() {
+      game.play(player1, 2, 1)
+      expect(grid.play).toHaveBeenCalled();
+    })
   })
 
 
