@@ -6,9 +6,9 @@ describe("Grid", function() {
   var player2;
 
   beforeEach(function() {
+    grid = new Grid();
     player1 = jasmine.createSpyObj("player1", ['getName']);
     player2 = jasmine.createSpyObj("player2", ['getName']);
-    grid = new Grid();
   })
 
   describe("#claimField", function() {
@@ -42,13 +42,35 @@ describe("Grid", function() {
 
   describe("#isGridFull", function() {
     it("returns true if there is no more empty field in the grid", function() {
-      var smallGrid = new Grid(1)
-      smallGrid.claimField(player1, 0, 0)
-      expect(smallGrid.isGridFull()).toBe(true);
+      for (var i = 0; i < grid.getGrid().length; i++) {
+        for (var j = 0; j < grid.getGrid().length; j++) {
+          grid.claimField(player1, i, j)
+        }
+      }
+      expect(grid.isGridFull()).toBe(true);
     })
 
     it("returns false if there is still empty field in the grid", function() {
       expect(grid.isGridFull()).toBe(false);
+    })
+  })
+
+  describe("#playerWins", function() {
+    it("returns true for player1 if all fields are claimed in a row", function() {
+      grid.claimField("player1", 0, 0)
+      grid.claimField("player2", 1, 1)
+      grid.claimField("player1", 1, 0)
+      grid.claimField("player2", 2, 1)
+      grid.claimField("player1", 2, 0)
+      expect(grid.playerWins("player1")).toBe(true)
+    })
+
+    xit("returns true for player1 if all fields are claimed in a column", function() {
+
+    })
+
+    xit("returns true for player1 if all fields are claimed in diagonal", function() {
+
     })
   })
 
