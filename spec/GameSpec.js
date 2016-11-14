@@ -11,11 +11,9 @@ describe("Game", function() {
     player2 = jasmine.createSpyObj("player2", ['getName']);
     grid = jasmine.createSpy("grid");
     game = new Game(player1, player2, grid);
-    console.log(game)
   })
 
   describe("#getPlayer1", function() {
-    console.log(player1)
     it("returns player1", function() {
       expect(game.getPlayer1()).toEqual(player1);
     })
