@@ -9,8 +9,9 @@ describe("Game", function() {
   beforeEach(function() {
     player1 = jasmine.createSpyObj("player1", ['getName']);
     player2 = jasmine.createSpyObj("player2", ['getName']);
-    grid = jasmine.createSpyObj("grid", ['play', 'getGrid', 'isGridFull']);
+    grid = jasmine.createSpyObj("grid", ['play', 'getGrid', 'isGridFull', 'isValidChoice']);
     game = new Game(player1, player2, grid);
+    grid.isValidChoice.and.returnValue(true)
   })
 
   describe("#getPlayer1", function() {
@@ -69,6 +70,16 @@ describe("Game", function() {
     it("raises error if the same player wants to play again", function() {
       game.play(player1, 0, 0)
       expect( function() { game.play(player1, 1, 1)}).toThrowError("Invalid player")
+    })
+
+    it("calls the isValidChoice on the grid", function() {
+      game.play(player1, 1, 1)
+      expect(grid.isValidChoice).toHaveBeenCalled();
+    })
+
+    it("raises error if the choice is invalid", function() {
+      grid.isValidChoice.and.returnValue(false)
+      expect(function() { game.play(player2, 4, 1)}).toThrowError("Invalid choice")
     })
   })
 

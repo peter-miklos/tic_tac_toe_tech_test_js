@@ -28,6 +28,7 @@ Game.prototype = {
   _validateGameAndPlayer: function(player, x, y) {
     if(this._isGameOver()) { throw new Error("Game Over") }
     if(!this._isValidPlayer(player)) { throw new Error("Invalid player")}
+    if(!this._currentGrid.isValidChoice(x, y)) { throw new Error("Invalid choice") }
   },
   _isGameOver: function() {
     return typeof this._winner !== 'undefined' || this._currentGrid.isGridFull()
