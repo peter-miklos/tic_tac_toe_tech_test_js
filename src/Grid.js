@@ -1,8 +1,6 @@
 "use strict"
 
 function Grid() {
-  // const _GRID_SIZE = 3
-  // this._gridSize = _GRID_SIZE
   this._gridContent = [[null, null, null], [null, null, null], [null, null, null]]
 }
 
@@ -20,9 +18,7 @@ Grid.prototype = {
     var result = true
     for (var i = 0; i < this._gridContent.length; i++) {
       for (var j = 0; j < this._gridContent.length; j++) {
-        if (this._gridContent[i][j] === null) {
-          result = false
-        }
+        if (this._gridContent[i][j] === null) result = false
       }
     }
     return result
@@ -65,6 +61,21 @@ Grid.prototype = {
     return result.includes(3);
   },
   _winsWithADiagonal: function(player) {
-    return false
+    return this._winsFromLeftToRight(player) || this._winsFromRightToLeft(player)
+  },
+  _winsFromLeftToRight: function(player) {
+    var count = 0;
+    for (var i = 0; i < this._gridContent.length; i++) {
+      if (this._gridContent[i][i] === player) { count++ }
+    }
+    return count === 3;
+  },
+  _winsFromRightToLeft: function(player) {
+    var count = 0;
+    var reversedArray = this._gridContent.reverse()
+    for (var i = 0; i < reversedArray.length; i++) {
+      if (reversedArray[i][i] === player) { count++ }
+    }
+    return count === 3;
   }
 }

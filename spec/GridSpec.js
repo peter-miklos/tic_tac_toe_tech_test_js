@@ -74,8 +74,22 @@ describe("Grid", function() {
       expect(grid.playerWins(player1)).toBe(true)
     })
 
-    xit("returns true for player1 if all fields are claimed in diagonal", function() {
+    it("returns true for player1 if all fields are claimed in diagonal, from left to right", function() {
+      grid.claimField(player1, 0, 0)
+      grid.claimField(player2, 1, 0)
+      grid.claimField(player1, 1, 1)
+      grid.claimField(player2, 2, 1)
+      grid.claimField(player1, 2, 2)
+      expect(grid.playerWins(player1)).toBe(true)
+    })
 
+    it("returns true for player1 if all fields are claimed in diagonal, from right to left", function() {
+      grid.claimField(player1, 2, 0)
+      grid.claimField(player2, 1, 0)
+      grid.claimField(player1, 1, 1)
+      grid.claimField(player2, 2, 1)
+      grid.claimField(player1, 0, 2)
+      expect(grid.playerWins(player1)).toBe(true)
     })
   })
 
