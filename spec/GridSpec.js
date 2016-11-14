@@ -25,6 +25,20 @@ describe("Grid", function() {
     })
   })
 
+  describe("#isValidChoice", function() {
+    it("returns true if field is not taken", function() {
+      expect(grid.isValidChoice(2, 1)).toBe(true)
+    })
+
+    it("returns false if field is taken", function() {
+      grid.claimField(player1, 1, 2)
+      expect(grid.isValidChoice(1, 2)).toBe(false)
+    })
+
+    it("returns false if coordinates are out of grid", function() {
+      expect(grid.isValidChoice(4, 5)).toBe(false)
+    })
+  })
 
 
 })
