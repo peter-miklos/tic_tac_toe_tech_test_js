@@ -15,13 +15,11 @@ Grid.prototype = {
     return this._isInsideGrid(x, y) && this._isFieldEmpty(x, y);
   },
   isGridFull: function() {
-    var result = true
+    var oneDimArray = []
     for (var i = 0; i < this._gridContent.length; i++) {
-      for (var j = 0; j < this._gridContent.length; j++) {
-        if (this._gridContent[i][j] === null) result = false
-      }
+      oneDimArray = oneDimArray.concat(this._gridContent[i])
     }
-    return result
+    return !oneDimArray.includes(null)
   },
   playerWins: function(player) {
     return this._winsWithARow(player) || this._winsWithAColumn(player) || this._winsWithADiagonal(player)
@@ -33,27 +31,21 @@ Grid.prototype = {
     return this._gridContent[y][x] === null;
   },
   _winsWithARow: function(player) {
-    var result = []
-    var count = 0;
-    for (var i = 0; i < this._gridContent.length; i++) {
-      for (var j = 0; j < this._gridContent[i].length; j++) {
-        if (this._gridContent[i][j] === player) { count++ }
-      }
-      result.push(count);
-      count = 0;
-    }
-    return result.includes(3);
+    return this._isSamePlayerInARow(player, this._gridContent)
   },
   _winsWithAColumn: function(player) {
-    var result = []
-    var count = 0;
     var self = this
     var transposedArray = self._gridContent[0].map(function(col, i) {
       return self._gridContent.map(function(row) { return row[i] })
     });
-    for (var i = 0; i < transposedArray.length; i++) {
-      for (var j = 0; j < transposedArray[i].length; j++) {
-        if (transposedArray[i][j] === player) { count++ }
+    return self._isSamePlayerInARow(player, transposedArray)
+  },
+  _isSamePlayerInARow: function(player, currentGrid) {
+    var result = []
+    var count = 0;
+    for (var i = 0; i < currentGrid.length; i++) {
+      for (var j = 0; j < currentGrid[i].length; j++) {
+        if (currentGrid[i][j] === player) { count++ }
       }
       result.push(count);
       count = 0;
@@ -64,17 +56,16 @@ Grid.prototype = {
     return this._winsFromLeftToRight(player) || this._winsFromRightToLeft(player)
   },
   _winsFromLeftToRight: function(player) {
-    var count = 0;
-    for (var i = 0; i < this._gridContent.length; i++) {
-      if (this._gridContent[i][i] === player) { count++ }
-    }
-    return count === 3;
+    return this._isSamePlayerInADiagonal(player, this._gridContent)
   },
   _winsFromRightToLeft: function(player) {
-    var count = 0;
     var reversedArray = this._gridContent.reverse()
-    for (var i = 0; i < reversedArray.length; i++) {
-      if (reversedArray[i][i] === player) { count++ }
+    return this._isSamePlayerInADiagonal(player, reversedArray)
+  },
+  _isSamePlayerInADiagonal: function(player, currentGrid) {
+    var count = 0;
+    for (var i = 0; i < currentGrid.length; i++) {
+      if (currentGrid[i][i] === player) { count++ }
     }
     return count === 3;
   }
