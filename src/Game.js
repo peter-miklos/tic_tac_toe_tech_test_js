@@ -39,6 +39,6 @@ Game.prototype = {
     this._currentGrid.claimField(player, x, y)
     this._playersInTurns.push(player)
     if (this._currentGrid.playerWins(player)) { this._winner = player }
-    return this._winner === player ? (player.getName() + " won!") : ("Field (x: " + x + ", y: " + y + ") claimed. Next turn.")
+    return this._winner === player ? (player.getName() + " won!") : "Field claimed. Next turn."
   }
 }
