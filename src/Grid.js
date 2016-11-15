@@ -56,17 +56,16 @@ Grid.prototype = {
     return this._winsFromLeftToRight(player) || this._winsFromRightToLeft(player)
   },
   _winsFromLeftToRight: function(player) {
-    var count = 0;
-    for (var i = 0; i < this._gridContent.length; i++) {
-      if (this._gridContent[i][i] === player) { count++ }
-    }
-    return count === 3;
+    return this._isSamePlayerInADiagonal(player, this._gridContent)
   },
   _winsFromRightToLeft: function(player) {
-    var count = 0;
     var reversedArray = this._gridContent.reverse()
-    for (var i = 0; i < reversedArray.length; i++) {
-      if (reversedArray[i][i] === player) { count++ }
+    return this._isSamePlayerInADiagonal(player, reversedArray)
+  },
+  _isSamePlayerInADiagonal: function(player, currentGrid) {
+    var count = 0;
+    for (var i = 0; i < currentGrid.length; i++) {
+      if (currentGrid[i][i] === player) { count++ }
     }
     return count === 3;
   }
