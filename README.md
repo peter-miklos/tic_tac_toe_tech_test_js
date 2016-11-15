@@ -37,7 +37,54 @@ Tests
 ### Feature tests
 The program's main features are tested in Chrome Console:
 ```
-TBD
+player1 = new Player("Jim")
+  Player {_name: "Jim"}
+player2 = new Player("Bob")
+  Player {_name: "Bob"}
+game = new Game(player1, player2)
+  Game {_players: Array[2], _currentGrid: Grid, _playersInTurns: Array[0]}
+game.play(player1, 0, 1)
+  "Field claimed. Next turn."
+game.play(player2, 1, 1)
+  "Field claimed. Next turn."
+game.getGrid()
+  Array[3]
+    0: Array[3]
+      0: null | 1: null | 2: null
+    1: Array[3]
+      0: Player_name: "Jim" | 1: Player_name: "Bob" | 2: null
+    2: Array[3]
+      0: null | 1: null | 2: null
+game.play(player2, 1, 2)
+  Uncaught Error: Invalid player(…)
+game.play(player1, 0, 1)
+  Uncaught Error: Invalid choice(…)
+game.play(player1, 0, 5)
+  Uncaught Error: Invalid choice(…)
+game.play(player1, 0, 0)
+  "Field claimed. Next turn."
+game.play(player2, 1, 0)
+  "Field claimed. Next turn."
+game.getGrid()
+  Array[3]
+    0: Array[3]
+      0: Player_name: "Jim" | 1: null | 2: null
+    1: Array[3]
+      0: Player_name: "Jim" | 1: Player_name: "Bob" | 2: null
+    2: Array[3]
+      0: null | 1: Player_name: "Bob" | 2: null
+game.play(player1, 0, 2)
+  "Jim won!"
+game.play(player2, 1, 2)
+  Uncaught Error: Game Over(…)
+game.getGrid()
+  Array[3]
+    0: Array[3]
+      0: Player_name: "Jim" | 1: null | 2: null
+    1: Array[3]
+      0: Player_name: "Jim" | 1: Player_name: "Bob" | 2: null
+    2: Array[3]
+      0: Player_name: "Jim" | 1: Player_name: "Bob" | 2: null
 ```
 ### Unit tests
 The following unit tests are used:
