@@ -55,7 +55,7 @@ describe("Game", function() {
     })
 
     it("confirms that the field is claimed", function() {
-      expect(game.play(player1, 0, 2)).toEqual("Field (x: 0, y: 2) claimed. Next turn.")
+      expect(game.play(player1, 0, 2)).toEqual("Field claimed. Next turn.")
     })
 
     it("raises error if there is a winner, and game is over", function() {

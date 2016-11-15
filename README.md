@@ -37,10 +37,98 @@ Tests
 ### Feature tests
 The program's main features are tested in Chrome Console:
 ```
-TBD
+player1 = new Player("Jim")
+  Player {_name: "Jim"}
+player2 = new Player("Bob")
+  Player {_name: "Bob"}
+game = new Game(player1, player2)
+  Game {_players: Array[2], _currentGrid: Grid, _playersInTurns: Array[0]}
+game.play(player1, 0, 1)
+  "Field claimed. Next turn."
+game.play(player2, 1, 1)
+  "Field claimed. Next turn."
+game.getGrid()
+  Array[3]
+    0: Array[3]
+      0: null | 1: null | 2: null
+    1: Array[3]
+      0: Player_name: "Jim" | 1: Player_name: "Bob" | 2: null
+    2: Array[3]
+      0: null | 1: null | 2: null
+game.play(player2, 1, 2)
+  Uncaught Error: Invalid player(…)
+game.play(player1, 0, 1)
+  Uncaught Error: Invalid choice(…)
+game.play(player1, 0, 5)
+  Uncaught Error: Invalid choice(…)
+game.play(player1, 0, 0)
+  "Field claimed. Next turn."
+game.play(player2, 1, 0)
+  "Field claimed. Next turn."
+game.getGrid()
+  Array[3]
+    0: Array[3]
+      0: Player_name: "Jim" | 1: null | 2: null
+    1: Array[3]
+      0: Player_name: "Jim" | 1: Player_name: "Bob" | 2: null
+    2: Array[3]
+      0: null | 1: Player_name: "Bob" | 2: null
+game.play(player1, 0, 2)
+  "Jim won!"
+game.play(player2, 1, 2)
+  Uncaught Error: Game Over(…)
+game.getGrid()
+  Array[3]
+    0: Array[3]
+      0: Player_name: "Jim" | 1: null | 2: null
+    1: Array[3]
+      0: Player_name: "Jim" | 1: Player_name: "Bob" | 2: null
+    2: Array[3]
+      0: Player_name: "Jim" | 1: Player_name: "Bob" | 2: null
 ```
 ### Unit tests
 The following unit tests are used:
 ```
-TBD
+Player
+  #getName
+    returns the player's name
+Game
+  #getPlayer1
+    returns player1
+  #getPlayer2
+    return player2
+  #getWinner
+    returns the winner of the game
+  #getGrid
+    calls the getGrid method on the grid
+    returns the value returned by the grid
+  #play
+    calls the claimField method on the grid
+    confirms that the field is claimed
+    raises error if there is a winner, and game is over
+    raises error if grid is full and game is over
+    calls the isGridFull method on the grid
+    raises error if the same player wants to play again
+    calls the isValidChoice on the grid
+    raises error if the choice is invalid
+    calls playerWins method on the grid
+    player is added to winner variable if player wins the game
+    confirms that the player won the game
+Grid
+  #claimField
+    add the player into the requested field
+  #getGrid
+    returns a copy of the grid
+  #isValidChoice
+    returns true if field is not taken
+    returns false if field is taken
+    returns false if coordinates are out of grid
+  #isGridFull
+    returns true if there is no more empty field in the grid
+    returns false if there is still empty field in the grid
+  #playerWins
+    returns true for player1 if all fields are claimed in a row
+    returns true for player1 if all fields are claimed in a column
+    returns true for player1 if all fields are claimed in diagonal, from left to right
+    returns true for player1 if all fields are claimed in diagonal, from right to left
 ```
