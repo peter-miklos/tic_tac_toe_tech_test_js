@@ -1,9 +1,9 @@
 "use strict"
 
 class Game {
-  constructor(player1, player2, grid) {
+  constructor(player1, player2, grid = new Grid()) {
     this._players = [player1, player2];
-    this._currentGrid = grid ? grid : new Grid();
+    this._currentGrid = grid;
     this._winner;
     this._playersInTurns = []
   }
