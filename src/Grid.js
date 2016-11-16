@@ -15,8 +15,8 @@ Grid.prototype = {
     return this._isInsideGrid(x, y) && this._isFieldEmpty(x, y);
   },
   isGridFull: function() {
-    var oneDimArray = []
-    for (var i = 0; i < this._gridContent.length; i++) {
+    let oneDimArray = []
+    for (let i = 0; i < this._gridContent.length; i++) {
       oneDimArray = oneDimArray.concat(this._gridContent[i])
     }
     return !oneDimArray.includes(null)
@@ -34,18 +34,18 @@ Grid.prototype = {
     return this._isSamePlayerInARow(player, this._gridContent)
   },
   _winsWithAColumn: function(player) {
-    var self = this
-    var transposedArray = self._gridContent[0].map(function(col, i) {
-      return self._gridContent.map(function(row) { return row[i] })
+    let self = this
+    let transposedArray = self._gridContent[0].map(function(col, i) {
+      return self._gridContent.map(row => row[i])
     });
     return self._isSamePlayerInARow(player, transposedArray)
   },
   _isSamePlayerInARow: function(player, currentGrid) {
-    var result = []
-    var count = 0;
-    for (var i = 0; i < currentGrid.length; i++) {
-      for (var j = 0; j < currentGrid[i].length; j++) {
-        if (currentGrid[i][j] === player) { count++ }
+    let result = []
+    let count = 0;
+    for (let i = 0; i < currentGrid.length; i++) {
+      for (let j = 0; j < currentGrid[i].length; j++) {
+        if (currentGrid[i][j] === player) count++
       }
       result.push(count);
       count = 0;
@@ -59,13 +59,13 @@ Grid.prototype = {
     return this._isSamePlayerInADiagonal(player, this._gridContent)
   },
   _winsFromRightToLeft: function(player) {
-    var reversedArray = this._gridContent.reverse()
+    let reversedArray = this._gridContent.reverse()
     return this._isSamePlayerInADiagonal(player, reversedArray)
   },
   _isSamePlayerInADiagonal: function(player, currentGrid) {
-    var count = 0;
-    for (var i = 0; i < currentGrid.length; i++) {
-      if (currentGrid[i][i] === player) { count++ }
+    let count = 0;
+    for (let i = 0; i < currentGrid.length; i++) {
+      if (currentGrid[i][i] === player) count++
     }
     return count === 3;
   }
