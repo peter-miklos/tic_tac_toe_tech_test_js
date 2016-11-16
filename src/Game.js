@@ -30,9 +30,9 @@ class Game {
   }
 
   _validateGameAndPlayer(player, x, y) {
-    if(this._isGameOver()) { throw new Error("Game Over") }
-    if(!this._isValidPlayer(player)) { throw new Error("Invalid player")}
-    if(!this._currentGrid.isValidChoice(x, y)) { throw new Error("Invalid choice") }
+    if(this._isGameOver()) throw new Error("Game Over")
+    if(!this._isValidPlayer(player)) throw new Error("Invalid player")
+    if(!this._currentGrid.isValidChoice(x, y)) throw new Error("Invalid choice")
   }
 
   _isGameOver() {
@@ -44,9 +44,9 @@ class Game {
   }
 
   _completeTurn(player, x, y) {
-    this._currentGrid.claimField(player, x, y)
-    this._playersInTurns.push(player)
-    if (this._currentGrid.playerWins(player)) { this._winner = player }
-    return this._winner === player ? (player.getName() + " won!") : "Field claimed. Next turn."
+    this._currentGrid.claimField(player, x, y);
+    this._playersInTurns.push(player);
+    if (this._currentGrid.playerWins(player)) this._winner = player;
+    return this._winner === player ? (player.getName() + " won!") : "Field claimed. Next turn.";
   }
 }
