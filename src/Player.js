@@ -1,11 +1,11 @@
 "use strict"
 
-function Player(name) {
-  this._name = name
-}
+class Player {
+  constructor(name) {
+    this._name = name;
+  }
 
-Player.prototype = {
-  getName: function() {
+  getName() {
     return this._name;
   }
 }
